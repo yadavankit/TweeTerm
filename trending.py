@@ -15,6 +15,7 @@ from bs4 import BeautifulSoup
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 import json
 from  docopt import docopt
+import urllib2
 
 __version__ = 0.1
 
@@ -31,6 +32,14 @@ twitter = Twitter(auth=oauth)
 #List of Available Places
 world_trends = twitter.trends.available(_woeid=1)
 place_id_list = []
+
+#Crawls a URL and gets WOEID for Area Name
+def crawlAreaCode(areaName):
+	urlToParse = "http://woeid.rosselliot.co.nz/lookup/" + areaName
+	page = urllib2.urlopen(urlToParse).read()
+	soup = BeautifulSoup(page, "html.parser")
+	areaCode = soup.find("td", {"class": "woeid"}).contents[0]
+	return areaCode
 
 #Display a Tweet on Terminal
 def display_tweet(tweet):
@@ -49,7 +58,7 @@ def check_availability(place_id):
 	if(place_id in place_id_list):
 		trending_tweets(place_id)
 	else:
-		print "Sorry, Twitter doesn't provides trending topics for this Area. Please Try another."
+		print "Sorry, Twitter doesn't provide trending topics for this Area. Please Try another."
 
 #Main Function
 def main():
@@ -60,6 +69,8 @@ def main():
 
 	#Take arguments from Terminal Command
 	arguments = docopt(__doc__, version=__version__)
+	area = crawlAreaCode(arguments['LOCATION'])
+	check_availability(int(area))
 
 
 #Execute main() block
