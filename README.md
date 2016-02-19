@@ -8,3 +8,7 @@ Arguments:
   LOCATION       Location for where Trending Tweets are to be displayed
 Options:
   -h --help
+  
+  ```sh
+$ tweeterm -h
+```
