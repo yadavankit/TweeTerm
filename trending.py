@@ -44,6 +44,9 @@ def crawlAreaCode(areaName):
 #Display a Tweet on Terminal
 def display_tweet(tweet):
 	print tweet['name']
+	tweet_page = urllib2.urlopen(tweet['url']).read()
+	soup = BeautifulSoup(tweet_page, "html.parser")
+	print soup.find("p", {"class":"js-tweet-text"}).get_text()
 
 
 #Get Trending Tweets for specific WOEID
