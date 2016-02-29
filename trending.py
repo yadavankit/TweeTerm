@@ -16,6 +16,7 @@ from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
 import json
 from  docopt import docopt
 import urllib2
+from colorama import Fore
 
 __version__ = 0.1
 

@@ -9,6 +9,6 @@ Arguments:
 Options:
   -h --help
   
-  ```sh
+```sh
 $ tweeterm -h
 ```
